@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 /**
  * search_path - Searches for the full path of a command in
  * the PATH environment variable.
@@ -72,3 +71,39 @@ void execute_command(char **arguments)
 	}
 	waitpid(pid, &status, 0);
 }
+
+/**
+ * my_strtok - Breaks a string into a sequence of tokens.
+ * @str: Pointer to the input string to be tokenized.
+ * @delim: Pointer to the string of delimiter characters.
+ * Return: Pointer to the next token, or NULL if there are no more tokens.
+ */
+char *my_strtok(char *str, const char *delim)
+{
+	static char *next_token;
+	char *token_start;
+	char *token_end;
+
+	if (str != NULL)
+	{
+		next_token = str;
+	}
+	if (next_token == NULL)
+	{
+		return (NULL);
+	}
+
+	token_start = next_token;
+	token_end = my_strpbrk(next_token, delim);
+	if (token_end != NULL)
+	{
+		*token_end = '\0';
+		next_token = token_end + 1;
+	}
+	else
+	{
+		next_token = NULL;
+	}
+	return (token_start);
+}
+
