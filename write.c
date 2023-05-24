@@ -3,7 +3,7 @@
 /**
  * prompt - Displays the shell prompt.
  */
-void prompt()
+void prompt(void)
 {
 	int _isatty = isatty(0);
 
@@ -28,6 +28,7 @@ ssize_t my_write(int fd, const void *buf, size_t count)
 	while (bytes_written < count)
 	{
 		ssize_t result = write(fd, c_buf + bytes_written, count - bytes_written);
+
 		if (result == -1)
 		{
 			return (-1);

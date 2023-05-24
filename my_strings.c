@@ -52,7 +52,7 @@ int my_strcmp(char *s1, char *s2)
 }
 
 /**
- * _strcat - concatenates two strings
+ * my_strcat - concatenates two strings
  * @dest: Pointer to string
  * @src: Pointer to string
  * Return: Returns a pointer to the resulting string dest
@@ -73,7 +73,7 @@ char *my_strcat(char *dest, char *src)
 }
 
 /**
- * _strlen -  returns the length of a string
+ * my_strlen -  returns the length of a string
  * @s: pointer to a strint
  * Return: returns the length of a string
  */
