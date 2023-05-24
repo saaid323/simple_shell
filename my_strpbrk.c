@@ -1,4 +1,4 @@
-#include "shell.c"
+#include "shell.h"
 
 /**
  * my_strpbrk - Finds the first occurrence of character in str.
