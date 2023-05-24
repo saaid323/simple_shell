@@ -45,6 +45,11 @@ void execute_command(char **arguments)
 	pid_t pid;
 	char *full_path;
 
+	if (my_strcmp(arguments[0], "exit") == 0)
+	{
+		exit(0);
+	}
+
 	pid = fork();
 	if (pid < 0)
 	{

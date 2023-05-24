@@ -25,7 +25,6 @@ char *my_strtok(char *str, const char *delim);
 char *my_getenv(const char *name);
 char *search_path(char *command);
 void execute_command(char** arguments);
-void exit_shell();
 void print_environment();
 
 
