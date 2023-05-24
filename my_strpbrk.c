@@ -16,7 +16,7 @@ char *my_strpbrk(const char *str, const char *delim)
 		{
 			if (*str == *d)
 			{
-				return ((char *str));
+				return ((char *)str);
 			}
 			d++;
 		}

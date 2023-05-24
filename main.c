@@ -6,10 +6,8 @@
 
 int main(void)
 {
-	char *line = NULL;
-	char *args[MAX_ARGS];
+	char *line = NULL, *args[MAX_ARGS], *token;
 	size_t len = 0;
-	char *token;
 	int arg_count;
 
 	while (1)
@@ -32,17 +30,15 @@ int main(void)
 		args[arg_count] = NULL;
 		if (arg_count > 0 && my_strcmp(args[0], "exit") == 0)
 		{
-			exit_shell();
+			int exit_status = atoi(args[1]);
+
+			exit(exit_status);
 		} else
 			exit(0);
 		if (arg_count > 0 && my_strcmp(args[0], "env") == 0)
-		{
 			print_environment();
-		}
 		else
-		{
 			execute_command(args);
-		}
 	}
 	free(line);
 	return (0);
