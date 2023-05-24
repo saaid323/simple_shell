@@ -33,8 +33,9 @@ int main(void)
 		if (arg_count > 0 && my_strcmp(args[0], "exit") == 0)
 		{
 			exit_shell();
-		}
-		else if (arg_count > 0 && my_strcmp(args[0], "env") == 0)
+		} else
+			exit(0);
+		if (arg_count > 0 && my_strcmp(args[0], "env") == 0)
 		{
 			print_environment();
 		}
