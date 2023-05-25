@@ -1,45 +1,78 @@
 #include "shell.h"
+
+char **commands = NULL;
+char *line = NULL;
+char *shell_name = NULL;
+int status = 0;
+
 /**
- * main - Entry point of the shell program.
- * Return: Always returns 0.
+ * main - Entry point
+ * @argc: number of arguments passed
+ * @argv: program arguments to be parsed
+ * Return: Always 0 on success
  */
 
-int main(void)
+int main(int argc __attribute__((unused)), char **argv)
 {
-	char *line = NULL, *args[MAX_ARGS], *token;
-	size_t len = 0;
-	int arg_count;
+	char **current_command = NULL;
+	int i, type_command = 0;
+	size_t n = 0;
 
+	signal(SIGINT, ctrl_c);
+	shell_name = argv[0];
 	while (1)
 	{
-		prompt();
-		if (getline(&line, &len, stdin) == -1)
+		process();
+		_write("#cisfun$ ", STDOUT_FILENO);
+		if (getline(&line, &n, stdin) == -1)
 		{
-			break;
+			free(line);
+			exit(status);
 		}
-
-		line[my_strcspn(line, "\n")] = '\0';
-		arg_count = 0;
-		token = my_strtok(line, " ");
-
-		while (token != NULL && arg_count < MAX_ARGS - 1)
+		newline(line);
+		comment(line);
+		commands = my_strtok(line, ";");
+		for (i = 0; commands[i] != NULL; i++)
 		{
-			args[arg_count++] = token;
-			token = my_strtok(NULL, " ");
+			current_command = my_strtok(commands[i], " ");
+			if (current_command[0] == NULL)
+			{
+				free(current_command);
+				break;
+			}
+			type_command = search_path(current_command[0]);
+			init(current_command, type_command);
+			free(current_command);
 		}
-		args[arg_count] = NULL;
-		if (arg_count > 0 && my_strcmp(args[0], "exit") == 0)
-		{
-			int exit_status = atoi(args[1]);
-
-			exit(exit_status);
-		} else
-			exit(0);
-		if (arg_count > 0 && my_strcmp(args[0], "env") == 0)
-			print_environment();
-		else
-			execute_command(args);
+		free(commands);
 	}
 	free(line);
-	return (0);
+	return (status);
+}
+
+/**
+ * my_strtok - Tokenize a string into an array
+ * @input_string: Input string to be tokenized
+ * @deli: Delimiter string
+ * Return: Double pointer to an array of tokens
+ */
+
+char **my_strtok(char *input_string, char *deli)
+{
+	int n = 0;
+	char **a = NULL;
+	char *token = NULL;
+	char *b = NULL;
+
+	token = _strtok(input_string, deli, &b);
+	while (token != NULL)
+	{
+		a = my_realloc(a, sizeof(*a) * n, sizeof(*a) * (n + 1));
+		a[n] = token;
+		token = _strtok(NULL, deli, &b);
+		n++;
+	}
+	a = my_realloc(a, sizeof(*a) * n, sizeof(*a) * (n + 1));
+	a[n] = NULL;
+	return (a);
 }
