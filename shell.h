@@ -1,16 +1,16 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#include <dirent.h>
-#include <errno.h>
-#include <signal.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <unistd.h>
+#include <dirent.h>
+#include <errno.h>
+#include <signal.h>
 
 /**
  *struct commands - a struct that hold command name and corresponding function
